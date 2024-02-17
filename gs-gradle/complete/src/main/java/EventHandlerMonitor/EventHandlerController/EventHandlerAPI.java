@@ -1,5 +1,10 @@
 package EventHandlerMonitor.EventHandlerController;
 
+import EventHandlerMonitor.ActivityMonitorRequest.EventRequest;
+import EventHandlerMonitor.Service.EventHandlerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -7,13 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/deal")
 public class EventHandlerAPI {
 
+    @Autowired
+    private EventHandlerService eventHandlerService;
     /*
      * API to trigger the events
      *
      */
-//    @PostMapping("trigger/event")
-//    public ResponseEntity createDeal(@RequestBody DealCreateRequest request) {
-//        Deal deal = dealService.createDeal(request,false);
-//        return okResponseEntity(deal);
-//    }
+    @PostMapping("trigger/event")
+    public void createDeal(@RequestBody EventRequest request) {
+
+    }
 }
