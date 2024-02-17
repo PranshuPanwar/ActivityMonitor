@@ -1,6 +1,7 @@
 package EventHandlerMonitor.ClientConfiguration;
 
 
+import EventHandlerMonitor.Configurations.AlertConfigCollection;
 import EventHandlerMonitor.Configurations.ClientConfigurationProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +18,7 @@ public class ClientConfigurationParser {
     private Resource clientConfigResource;
 
     @Bean
-    public ClientConfigurationProperties clientConfigProperties(ObjectMapper objectMapper) throws IOException {
-        return objectMapper.readValue(clientConfigResource.getInputStream(), ClientConfigurationProperties.class);
+    public AlertConfigCollection clientConfigProperties(ObjectMapper objectMapper) throws IOException {
+        return objectMapper.readValue(clientConfigResource.getInputStream(), AlertConfigCollection.class);
     }
 }
