@@ -1,3 +1,10 @@
+package EventHandlerMonitor.algorithms;
+
+import EventHandlerMonitor.Enum.AlertConfigType;
+import EventHandlerMonitor.Enum.EventType;
+import EventHandlerMonitor.Service.IEventManager;
+import org.springframework.stereotype.Service;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.time.Instant;
@@ -5,7 +12,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
-class TumblingWindow {
+@Service
+class TumblingWindow implements IEventManager {
     private final long windowInSecs;
     private final Queue<Long> eventTimestamps = new LinkedList<>();
     private long currentWindowStart;
@@ -22,6 +30,12 @@ class TumblingWindow {
         this.currentWindowStart = startOfDay.toInstant().toEpochMilli();
     }
 
+    @Override
+    public AlertConfigType getEventManagerType() {
+        return AlertConfigType.TUMBLING_WINDOW;
+    }
+
+    @Override
     public boolean processEvent(long eventTimeInSec) {
         if (eventTimeInSec >= currentWindowStart && eventTimeInSec < currentWindowStart + windowInSecs) {
             eventTimestamps.add(eventTimeInSec);
@@ -30,7 +44,7 @@ class TumblingWindow {
                 currentWindowStart += windowInSecs;
                 eventTimestamps.clear();
             }
-            eventTimestamps.add(eventTime);
+            eventTimestamps.add(eventTimeInSec);
         }
 
         System.out.println("Event processed by tumbling window. Current bucket size: " + eventTimestamps.size());
@@ -42,9 +56,4 @@ class TumblingWindow {
         return false;
     }
 
-    public static void main(String[] args) {
-        TumblingWindow tumblingWindow = new TumblingWindow(3600,10);
-        long now = Instant.now().toEpochMilli();
-        tumblingWindow.processEvent(now);        
-    }
 }

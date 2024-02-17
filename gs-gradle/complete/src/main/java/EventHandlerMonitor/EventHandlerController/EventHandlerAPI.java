@@ -19,7 +19,7 @@ public class EventHandlerAPI {
      *
      */
     @PostMapping("trigger/event")
-    public void createDeal(@RequestBody EventRequest request) {
-
+    public void eventTriggered(@RequestBody EventRequest request) {
+      eventHandlerService.processEvent(request);
     }
 }

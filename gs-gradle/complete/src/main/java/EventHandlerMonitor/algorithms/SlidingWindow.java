@@ -1,8 +1,16 @@
+package EventHandlerMonitor.algorithms;
+
+import EventHandlerMonitor.Enum.AlertConfigType;
+import EventHandlerMonitor.Enum.EventType;
+import EventHandlerMonitor.Service.IEventManager;
+import org.springframework.stereotype.Service;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.time.Instant;
 
-class SlidingWindow {
+@Service
+public class SlidingWindow implements IEventManager {
     private final long windowInSecs;
     private final Queue<Long> eventTimestamps = new LinkedList<>();
     private long threshold;
@@ -12,6 +20,12 @@ class SlidingWindow {
         this.threshold = threshold;
     }
 
+    @Override
+    public AlertConfigType getEventManagerType() {
+        return AlertConfigType.SLIDING_WINDOW;
+    }
+
+    @Override
     public boolean processEvent(long eventTimeInSec) {
         long currentTimeInSec = Instant.now().getEpochSecond();
 
@@ -29,9 +43,4 @@ class SlidingWindow {
         return false;
     }
 
-    public static void main(String[] args) {
-        SlidingWindow sw = new SlidingWindow(3600,10);
-        long now = Instant.now().toEpochMilli();
-        sw.processEvent(now);        
-    }
 }

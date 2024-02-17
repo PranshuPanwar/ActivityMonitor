@@ -1,7 +1,9 @@
 package EventHandlerMonitor.Service;
 
+import EventHandlerMonitor.Enum.AlertConfigType;
 import EventHandlerMonitor.Enum.EventType;
 
 public interface IEventManager {
-    EventType getEventManagerType();
+    AlertConfigType getEventManagerType();
+    boolean processEvent(long eventTimeInSec);
 }

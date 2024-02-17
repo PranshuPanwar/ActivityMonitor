@@ -1,12 +1,10 @@
 package EventHandlerMonitor.Dto;
 
-import EventHandlerMonitor.Enum.DispatchType;
+import EventHandlerMonitor.Enum.DispatchStrategyType;
 import lombok.Data;
-
-import java.util.List;
 
 @Data
 public class DispatcherStrategy {
-    private DispatchType type;
+    private DispatchStrategyType type;
     private String message;
 }
